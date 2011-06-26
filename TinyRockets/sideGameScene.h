@@ -42,6 +42,8 @@
 -(void)stabalizeShip;
 -(void)goForward;
 -(void)goBackward;
+-(void)moveUp;
+-(void)moveDown;
 
 
 -(NSString*) submitScore:(NSString *) theScore username:(NSString *) username;

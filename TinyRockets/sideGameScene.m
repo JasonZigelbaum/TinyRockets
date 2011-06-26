@@ -142,6 +142,7 @@
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
     
+    /*
     //ALWAYS allow the ship to move at 90 from 50 to 270
     
     [self moveShip:acceleration.y];
@@ -204,6 +205,67 @@
         //The small tilt game gives a better ratio of objects moving away from you. Be careful not to make it too large...
         [self moveObstacles:(acceleration.y * 1.25)];
         
+    }
+     */
+    
+    //If jerked by a threshold down
+    NSLog(@"%d", ship.canMove);
+    
+    if (acceleration.y > .3 && (ship.canMove)){
+        //move up a row
+        ship.canMove = FALSE;
+        [self moveUp];
+    }
+    else if(acceleration.y < -.3 && (ship.canMove)){
+        //move down a row
+        ship.canMove = FALSE;
+        [self moveDown];
+    }
+}
+
+-(void)moveUp
+{
+    ship.canMove = TRUE;
+
+    if (ship.row == 1) {
+        //Move up to row 2
+        id moveUp = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y + 50)];
+        id easeIn = [CCEaseOut actionWithAction:moveUp rate:2];
+        [ship runAction: easeIn];
+        ship.row++;
+    }
+    else if (ship.row == 2){
+        id moveUp = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y + 100)];
+        id easeIn = [CCEaseOut actionWithAction:moveUp rate:2];
+        [ship runAction: easeIn];
+        ship.row++;
+        //Move up to row 3
+    }
+    else {
+        //Do nothing
+    }
+}
+
+-(void)moveDown
+{
+    ship.canMove = TRUE;
+
+    if (ship.row == 3) {
+        //Move down to row 2
+        id moveDown = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y - 50)];
+        id easeIn = [CCEaseOut actionWithAction:moveDown rate:2];
+        [ship runAction: easeIn];
+        ship.row--;
+    }
+    else if (ship.row == 2){
+        //Move down to row 1
+        id moveDown = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y - 100)];
+        id easeIn = [CCEaseOut actionWithAction:moveDown rate:2];
+        [ship runAction: easeIn];
+        ship.row--;
+    }
+    else {
+        //Do nothing
     }
 }
 
