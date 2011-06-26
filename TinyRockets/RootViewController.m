@@ -93,7 +93,7 @@
 #endif // GAME_AUTOROTATION
 	
 	
-	// Shold not happen
+	// Should not happen
 	return NO;
 }
 
@@ -106,7 +106,7 @@
 	//
 	// Assuming that the main window has the size of the screen
 	// BUG: This won't work if the EAGLView is not fullscreen
-	///
+	//
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	CGRect rect;
 	

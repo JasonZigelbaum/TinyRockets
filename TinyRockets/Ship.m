@@ -10,7 +10,7 @@
 
 
 @implementation Ship
-@synthesize acceleration, score, keepScore, rocketAnimationFrames;
+@synthesize acceleration, score, keepScore, rocketAnimationFrames, layer;
 
 -(id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect
 {
@@ -48,7 +48,8 @@
         
 		CCAnimation *rocketAnim = [CCAnimation animationWithFrames:rocketAnimationFrames delay:0.05f];
 		[rocketAnimation runAction:[CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:rocketAnim restoreOriginalFrame:NO]]];
-                
+        
+        layer = 2;
 		acceleration = -2.0;
 		keepScore = TRUE;
         

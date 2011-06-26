@@ -65,7 +65,8 @@
 	CGRect otherRect = CGRectMake(obj.position.x - ((obj.contentSize.width / 2) - 5), obj.position.y - ((obj.contentSize.height / 2) - 5), obj.contentSize.height/2,  obj.contentSize.height/2);
 
 	// Feed the results into CGRectIntersectsRect() which tells if the rectangles intersect (obviously)
-	return CGRectIntersectsRect(ownRect, otherRect);	
+	//return CGRectIntersectsRect(ownRect, otherRect);	
+    return false;
 }
 
 @end

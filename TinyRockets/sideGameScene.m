@@ -58,10 +58,10 @@
         
         currentLevel = 1;
 		
-        _background = [GasBackground spriteWithFile:@"nyc.jpg"];
-        _background.anchorPoint = ccp(0,0);
-        [self addChild:_background];
-        
+//        _background = [GasBackground spriteWithFile:@"nyc.jpg"];
+//        _background.anchorPoint = ccp(0,0);
+//        [self addChild:_background];
+
         //Add Fire
         
         [self addChild:particleFire];
@@ -109,35 +109,35 @@
 	return self;
 }
 
-- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if (ship.acceleration < 0)
-	{
-	
-		NSArray *touchArray = [touches allObjects];
-		
-		if ([touchArray count] > 1)
-		{
-			NSLog(@"TWO TOUCHES");
-		}
-        
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+   /*
+    * if you want to do multiple touches- very precise though
+    *
+    *
+    if ([[event allTouches] count] > 1) {
+        NSLog(@"TWO TOUCHES");
+    } else {
         NSLog(@"ONE TOUCH");
-
-        _boostGiven = TRUE;
-		//id boostForward = [CCMoveTo actionWithDuration:1 position:ccp(ship.position.x + 100, ship.position.y)];
-        //id ease = [CCEaseExponentialIn actionWithAction:boostForward];
-        //[ship runAction: ease];
-		
-		//ship.acceleration = 2;
-	}
+    }
+    
+    */
+    /*
+     * Code for location based touch detection and response.
+     *
+     */
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint location = [touch locationInView:touch.view];
+    if (location.y > 240) {
+        [self goForward];
+    }
+    else {
+        NSLog(@"Dodge");
+        [self goBackward];
+    }
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if ((ship.acceleration > 0)) 
-	{
-		ship.acceleration = -2;
-	}
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
 }
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
@@ -317,12 +317,59 @@
 	}
 }
 
+- (void)goForward
+{
+    /*
+     *Code for performing sequences of cocos2d actions.
+     *
+    id scaleOut = [CCScaleTo actionWithDuration:.5 scale:1];
+    id easeIn = [CCEaseIn actionWithAction:scaleOut rate:2];
+    id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
+    id easeOut = [CCEaseOut actionWithAction:scaleIn rate:2];
+    [ship runAction: [CCSequence actions:easeIn, easeOut, nil]];
+     *
+     */
+    if(ship.layer == 1){
+       //Forward to layer 2
+        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
+        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+        [ship runAction: easeIn];
+        ship.layer++; 
+    } else if(ship.layer == 2){
+       //Forward to layer 1
+        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:1];
+        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+        [ship runAction: easeIn];
+        ship.layer++;
+    } else {
+        //do nothing
+    }
+}
+
+- (void)goBackward
+{
+    if(ship.layer == 3){
+        //Back to layer 3
+        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
+        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+        [ship runAction: easeIn];
+        ship.layer--;
+    } else if(ship.layer == 2){
+        //Back to layer 2
+        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.5];
+        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+        [ship runAction: easeIn];
+        ship.layer--;
+    } else {
+        //Do nothing
+    }
+}
+
 - (void)resetShip
 {
 	// Reset ship position/speed
 	CGSize windowSize = [CCDirector sharedDirector].winSize;
 	ship.position = ccp(windowSize.width / 4, windowSize.height / 2);
-	
 }
 
 // Mostly handles collision detection

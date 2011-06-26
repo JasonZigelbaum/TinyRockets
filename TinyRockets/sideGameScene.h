@@ -40,6 +40,9 @@
 -(void)moveObstacles:(float)acceleration;
 -(void)rotateShip:(float)acceleration rate:(int)rate min:(int)min max:(int)max;
 -(void)stabalizeShip;
+-(void)goForward;
+-(void)goBackward;
+
 
 -(NSString*) submitScore:(NSString *) theScore username:(NSString *) username;
 

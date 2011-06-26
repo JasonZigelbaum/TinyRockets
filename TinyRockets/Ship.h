@@ -13,6 +13,7 @@
 
 	float acceleration;
 	int score;
+    int layer;
     bool keepScore;
 	CCSprite *rocketAnimation;
 	NSMutableArray *rocketAnimationFrames;
@@ -22,6 +23,7 @@
 @property NSMutableArray* rocketAnimationFrames;
 @property float acceleration;
 @property int score;
+@property int layer;
 @property bool keepScore;
 
 -(id)initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;

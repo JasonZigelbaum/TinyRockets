@@ -35,7 +35,7 @@
         // Add the sprite as a child of the sheet, so that it knows where to get its image data.
         [planetSheet addChild:planetAnimation];
         
-        for(int i = 1; i < 20; i++) {
+        for(int i = 1; i <= 20; i++) {
             
             CCSpriteFrame *planetFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%d.png",i]];
             [planetAnimationFrames addObject:planetFrame];
@@ -65,7 +65,8 @@
 	CGRect otherRect = CGRectMake(obj.position.x - ((obj.contentSize.width / 2) - 5), obj.position.y - ((obj.contentSize.height / 2) - 5), obj.contentSize.height/2,  obj.contentSize.height/2);
     
 	// Feed the results into CGRectIntersectsRect() which tells if the rectangles intersect (obviously)
-	return CGRectIntersectsRect(ownRect, otherRect);	
+	//return CGRectIntersectsRect(ownRect, otherRect);	
+    return false;
 }
 
 @end
