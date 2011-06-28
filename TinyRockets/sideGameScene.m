@@ -41,17 +41,17 @@
 		
 		//set layer to respond to touches!
 		[self setIsTouchEnabled:TRUE];
-        
-        //Set up the particle emitter for the fire trail
-        particleFire = [[CCParticleFire alloc] initWithTotalParticles:40];
-        particleFire.texture = [[CCTextureCache sharedTextureCache] addImage:@"fireparticle.png"];
-        particleFire.startSpinVar = 20.0f;
-        particleFire.posVar = ccp(15.0f, 5.0f);
-        particleFire.rotation = 270;
-        particleFire.scale = .5;
-        particleFire.anchorPoint = ccp(.5,.5);
-
-        // Set up the ship...
+//        
+//        //Set up the particle emitter for the fire trail
+//        particleFire = [[CCParticleFire alloc] initWithTotalParticles:40];
+//        particleFire.texture = [[CCTextureCache sharedTextureCache] addImage:@"fireparticle.png"];
+//        particleFire.startSpinVar = 20.0f;
+//        particleFire.posVar = ccp(15.0f, 5.0f);
+//        particleFire.rotation = 270;
+//        particleFire.scale = .5;
+//        particleFire.anchorPoint = ccp(.5,.5);
+//
+//        // Set up the ship...
 		ship = [Ship spriteWithFile:@"shipAlpha.png"];
 		ship.rotation = 90; 
         ship.scale = .75;
@@ -64,7 +64,7 @@
 
         //Add Fire
         
-        [self addChild:particleFire];
+//        [self addChild:particleFire];
         
 		easyLevelGenerator = [[EasyLevelFrames alloc] init];
 		
@@ -209,63 +209,61 @@
      */
     
     //If jerked by a threshold down
-    NSLog(@"%d", ship.canMove);
-    
-    if (acceleration.y > .3 && (ship.canMove)){
+
+    if (acceleration.y > .1){
         //move up a row
-        ship.canMove = FALSE;
         [self moveUp];
     }
-    else if(acceleration.y < -.3 && (ship.canMove)){
+    else if(acceleration.y < -.1){
         //move down a row
-        ship.canMove = FALSE;
         [self moveDown];
     }
 }
 
 -(void)moveUp
 {
-    ship.canMove = TRUE;
-
-    if (ship.row == 1) {
-        //Move up to row 2
-        id moveUp = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y + 50)];
-        id easeIn = [CCEaseOut actionWithAction:moveUp rate:2];
-        [ship runAction: easeIn];
-        ship.row++;
-    }
-    else if (ship.row == 2){
-        id moveUp = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y + 100)];
-        id easeIn = [CCEaseOut actionWithAction:moveUp rate:2];
-        [ship runAction: easeIn];
-        ship.row++;
-        //Move up to row 3
-    }
-    else {
-        //Do nothing
+    id moveUp;
+    id easeIn;
+    id rotateIn;
+    id rotateOut;
+    
+    switch (ship.row) {
+        case 1:
+            moveUp = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, 250)];
+            easeIn = [CCEaseInOut actionWithAction:moveUp rate:2];
+            [ship runAction: easeIn];
+            rotateIn = [CCRotateTo actionWithDuration:.25 angle:45];
+            rotateOut = [CCRotateTo actionWithDuration:.25 angle:90];
+            [ship runAction: [CCSequence actions:rotateIn, rotateOut, nil]];
+            ship.row++;
+            break;
+            
+        case 2:
+            break;
+        
     }
 }
 
 -(void)moveDown
 {
-    ship.canMove = TRUE;
-
-    if (ship.row == 3) {
-        //Move down to row 2
-        id moveDown = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y - 50)];
-        id easeIn = [CCEaseOut actionWithAction:moveDown rate:2];
-        [ship runAction: easeIn];
-        ship.row--;
-    }
-    else if (ship.row == 2){
-        //Move down to row 1
-        id moveDown = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, ship.position.y - 100)];
-        id easeIn = [CCEaseOut actionWithAction:moveDown rate:2];
-        [ship runAction: easeIn];
-        ship.row--;
-    }
-    else {
-        //Do nothing
+    id moveDown;
+    id easeIn;
+    id rotateIn;
+    id rotateOut;
+    
+    switch (ship.row) {
+        case 2:
+            moveDown = [CCMoveTo actionWithDuration:.5 position:ccp(ship.position.x, 50)];
+            easeIn = [CCEaseInOut actionWithAction:moveDown rate:2];
+            [ship runAction: easeIn];
+            rotateIn = [CCRotateTo actionWithDuration:.25 angle:135];
+            rotateOut = [CCRotateTo actionWithDuration:.25 angle:90];
+            [ship runAction: [CCSequence actions:rotateIn, rotateOut, nil]];
+            ship.row--;
+            break;
+            
+        case 1:
+            break;
     }
 }
 
@@ -438,9 +436,9 @@
 - (void)update:(ccTime)dt
 {
  
-    particleFire.position = ccp(ship.position.x - 30, ship.position.y - 10);
+  //  particleFire.position = ccp(ship.position.x - 30, ship.position.y - 10);
     
-    particleFire.rotation = (ship.rotation + 180);
+  //  particleFire.rotation = (ship.rotation + 180);
     
 	scoresString = [NSString stringWithFormat:@"%i", ship.score];
 	[scoresTotal setString:scoresString];

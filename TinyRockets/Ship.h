@@ -19,6 +19,7 @@
     bool canMove;
 	CCSprite *rocketAnimation;
 	NSMutableArray *rocketAnimationFrames;
+    CCParticleMeteor *fire;
 	
 }
 

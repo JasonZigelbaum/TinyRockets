@@ -17,7 +17,16 @@
 	if((self = [super initWithTexture:texture rect:rect]))
 	{
 		
-		
+		//Set up the particle emitter for the fire trail
+        fire = [[CCParticleMeteor alloc] initWithTotalParticles:50];
+        fire.texture = [[CCTextureCache sharedTextureCache] addImage:@"fireparticle.png"];
+        fire.startSpin = 0.0f;
+        fire.scale = .5;
+        fire.rotation = 180;
+        fire.position = ccp(95,0);
+        fire.tangentialAccel = 0;
+        
+        [self addChild:fire];
 		
 		rocketAnimationFrames = [[NSMutableArray alloc] init];
 		
