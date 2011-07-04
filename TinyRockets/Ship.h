@@ -15,6 +15,7 @@
 	int score;
     int layer;
     int row;
+    int depth;
     bool keepScore;
     bool canMove;
 	CCSprite *rocketAnimation;
@@ -28,6 +29,7 @@
 @property int score;
 @property int layer;
 @property int row;
+@property int depth;
 @property bool canMove;
 @property bool keepScore;
 

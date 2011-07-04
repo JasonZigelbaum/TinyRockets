@@ -209,7 +209,9 @@
      */
     
     //If jerked by a threshold down
-
+    
+    [self moveObstacles:0];
+    
     if (acceleration.y > .1){
         //move up a row
         [self moveUp];
@@ -389,39 +391,59 @@
     [ship runAction: [CCSequence actions:easeIn, easeOut, nil]];
      *
      */
-    if(ship.layer == 1){
-       //Forward to layer 2
-        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
-        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
-        [ship runAction: easeIn];
-        ship.layer++; 
-    } else if(ship.layer == 2){
-       //Forward to layer 1
-        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:1];
-        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
-        [ship runAction: easeIn];
-        ship.layer++;
-    } else {
-        //do nothing
+    
+    id scaleIn;
+    id easeIn;
+    
+    switch (ship.layer) {
+        case 1:
+            //Forward to layer 2
+            scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
+            easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+            [ship runAction: easeIn];
+            ship.layer++; 
+            break;
+            
+        case 2:
+            //Forward to layer 3
+            scaleIn = [CCScaleTo actionWithDuration:.5 scale:1];
+            easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
+            [ship runAction: easeIn];
+            ship.layer++;
+            break;
+        
+        case 3:
+            break;
+            //do nothing
     }
 }
 
 - (void)goBackward
 {
-    if(ship.layer == 3){
-        //Back to layer 3
-        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.75];
-        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
-        [ship runAction: easeIn];
-        ship.layer--;
-    } else if(ship.layer == 2){
-        //Back to layer 2
-        id scaleIn = [CCScaleTo actionWithDuration:.5 scale:.5];
-        id easeIn = [CCEaseOut actionWithAction:scaleIn rate:2];
-        [ship runAction: easeIn];
-        ship.layer--;
-    } else {
-        //Do nothing
+    
+    id scaleOut;
+    id easeIn;
+    
+    switch (ship.layer) {
+        case 3:
+            //Back to layer 3
+            scaleOut = [CCScaleTo actionWithDuration:.5 scale:.75];
+            easeIn = [CCEaseOut actionWithAction:scaleOut rate:2];
+            [ship runAction: easeIn];
+            ship.layer--;
+            break;
+            
+        case 2:
+            //Back to layer 2
+            scaleOut = [CCScaleTo actionWithDuration:.5 scale:.5];
+            easeIn = [CCEaseOut actionWithAction:scaleOut rate:2];
+            [ship runAction: easeIn];
+            ship.layer--;
+            break;
+            
+        case 1:
+            break;
+            //do nothing
     }
 }
 

@@ -10,7 +10,7 @@
 
 
 @implementation Ship
-@synthesize acceleration, score, keepScore, rocketAnimationFrames, layer, row, canMove;
+@synthesize acceleration, score, keepScore, rocketAnimationFrames, layer, row, depth, canMove;
 
 -(id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect
 {
@@ -23,6 +23,7 @@
         fire.startSpin = 0.0f;
         fire.scale = .5;
         fire.rotation = 180;
+        
         fire.position = ccp(95,0);
         fire.tangentialAccel = 0;
         
